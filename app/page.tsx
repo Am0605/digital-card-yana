@@ -9,6 +9,8 @@ import { RsvpForm } from "@/components/invitation/RsvpForm";
 import { Venue } from "@/components/invitation/Venue";
 import { Wishes } from "@/components/invitation/Wishes";
 
+export const dynamic = "force-dynamic";
+
 export default function Home() {
   return (
     <InvitationShell>
