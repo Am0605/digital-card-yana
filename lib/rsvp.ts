@@ -1,13 +1,27 @@
 export const attendanceOptions = [
-  { value: "attending", label: "Joyfully Attending" },
-  { value: "declining", label: "Regretfully Declines" },
+  { value: "attending", label: "Hadir dengan sukacita" },
+  { value: "declining", label: "Mohon maaf, tidak dapat hadir" },
 ] as const;
 
 export const mealOptions = [
-  { value: "beef", label: "Beef" },
-  { value: "chicken", label: "Chicken" },
-  { value: "vegetarian", label: "Vegetarian" },
+  { value: "beef", label: "Daging" },
+  { value: "chicken", label: "Ayam" },
+  { value: "vegetarian", label: "Sayuran" },
 ] as const;
+
+export const guestCountMin = 1;
+export const guestCountMax = 10;
+
+export const guestCountOptions = Array.from(
+  { length: guestCountMax - guestCountMin + 1 },
+  (_, index) => guestCountMin + index,
+);
+
+export function isGuestCount(value: string) {
+  if (!/^\d+$/.test(value)) return false;
+  const count = Number(value);
+  return count >= guestCountMin && count <= guestCountMax;
+}
 
 export type Attendance = (typeof attendanceOptions)[number]["value"];
 export type MealPreference = (typeof mealOptions)[number]["value"];

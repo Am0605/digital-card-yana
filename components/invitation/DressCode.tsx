@@ -12,7 +12,7 @@ export function DressCode() {
   return (
     <section id="dress" className="px-6 py-20 sm:py-24">
       <FadeIn>
-        <SectionEyebrow>Attire</SectionEyebrow>
+        <SectionEyebrow>Pakaian</SectionEyebrow>
         <SectionTitle>{wedding.dressCode.title}</SectionTitle>
         <div className="mt-6">
           <Ornament />

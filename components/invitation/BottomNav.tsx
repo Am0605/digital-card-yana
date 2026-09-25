@@ -4,12 +4,13 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { CalendarChoices } from "@/components/invitation/AddToCalendar";
 import { MusicToggle } from "@/components/invitation/BackgroundMusic";
+import { wedding } from "@/lib/wedding";
 
 type NavId = "venue" | "contact" | "rsvp";
 
 const links: Array<{ id: NavId; label: string; icon: "pin" | "phone" | "rsvp" }> = [
-  { id: "contact", label: "Contact", icon: "phone" },
-  { id: "venue", label: "Location", icon: "pin" },
+  { id: "venue", label: "Lokasi", icon: "pin" },
+  { id: "contact", label: "Hubungi", icon: "phone" },
   { id: "rsvp", label: "RSVP", icon: "rsvp" },
 ];
 
@@ -106,15 +107,32 @@ export function BottomNav({
           exit={{ y: 28, opacity: 0 }}
           transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
           className="fixed inset-x-0 bottom-0 z-40 px-3 pb-[max(0.7rem,env(safe-area-inset-bottom))]"
-          aria-label="Invitation"
+          aria-label="Jemputan"
         >
-          <div className="relative mx-auto max-w-xl">
+          <div className="relative mx-auto max-w-xl" data-calendar-menu="">
             <div className="absolute -top-6 left-1/2 z-10 -translate-x-1/2">
               <MusicToggle playing={playing} onToggle={onToggleMusic} />
             </div>
 
+            <AnimatePresence>
+              {calendarOpen ? (
+                <motion.div
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 8 }}
+                  className="absolute inset-x-0 bottom-[calc(100%+2.4rem)] z-20 overflow-hidden rounded-2xl border border-gold/25 bg-white/95 p-2 shadow-[0_16px_40px_rgba(63,52,44,0.12)]"
+                >
+                  <div className="px-3 pt-3 pb-2 text-center">
+                    <p className="font-serif text-lg leading-snug text-ink">{wedding.dateLabel}</p>
+                    <p className="mt-1 font-serif text-sm italic text-ink-soft">{wedding.timeLabel}</p>
+                  </div>
+                  <CalendarChoices onDone={() => setCalendarOpen(false)} />
+                </motion.div>
+              ) : null}
+            </AnimatePresence>
+
             <div className="grid grid-cols-4 rounded-[1.6rem] border border-gold/20 bg-stone/95 pt-7 pb-2 shadow-[0_-10px_40px_rgba(63,52,44,0.12)] backdrop-blur-md">
-              <div className="relative" data-calendar-menu="">
+              <div>
                 <button
                   type="button"
                   onClick={() => setCalendarOpen((open) => !open)}
@@ -124,20 +142,8 @@ export function BottomNav({
                   }`}
                 >
                   <NavIcon name="calendar" />
-                  Calendar
+                  Kalendar
                 </button>
-                <AnimatePresence>
-                  {calendarOpen ? (
-                    <motion.div
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 8 }}
-                      className="absolute bottom-[calc(100%+0.85rem)] left-2 z-20 w-52 overflow-hidden rounded-2xl border border-gold/25 bg-white/95 p-2 shadow-[0_16px_40px_rgba(63,52,44,0.12)]"
-                    >
-                      <CalendarChoices onDone={() => setCalendarOpen(false)} />
-                    </motion.div>
-                  ) : null}
-                </AnimatePresence>
               </div>
 
               {links.map((link) => (

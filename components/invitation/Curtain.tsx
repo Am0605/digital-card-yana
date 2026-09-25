@@ -28,7 +28,7 @@ export function Curtain({
   }, []);
 
   return (
-    <div className="fixed inset-0 z-50" role="dialog" aria-label="Open invitation">
+    <div className="fixed inset-0 z-50" role="dialog" aria-label="Buka jemputan">
       <motion.div
         className={`${curtainFace} left-0 origin-left shadow-[8px_0_24px_rgba(63,52,44,0.12)]`}
         initial={false}
@@ -55,7 +55,7 @@ export function Curtain({
         className="absolute inset-0 z-10 flex flex-col items-center justify-center px-8 text-center"
       >
         <p className="text-[0.68rem] font-medium uppercase tracking-[0.38em] text-gold-deep">
-          You are invited
+          Anda dijemput
         </p>
         <p className="mt-4 font-script text-6xl leading-none text-ink sm:text-7xl">
           {wedding.monogram}
@@ -68,7 +68,7 @@ export function Curtain({
           {wedding.dateLabel}
         </p>
         <span className="mt-10 rounded-full border border-gold/40 bg-white/50 px-6 py-3 text-[0.68rem] font-medium uppercase tracking-[0.24em] text-ink">
-          Tap to open
+          Ketik untuk buka
         </span>
       </motion.button>
     </div>

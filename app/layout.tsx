@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Figtree, Great_Vibes } from "next/font/google";
+import { Amiri, Cormorant_Garamond, Figtree, Great_Vibes } from "next/font/google";
 import { wedding } from "@/lib/wedding";
 import "./globals.css";
 
@@ -20,11 +20,17 @@ const greatVibes = Great_Vibes({
   weight: "400",
 });
 
+const amiri = Amiri({
+  variable: "--font-amiri",
+  subsets: ["arabic"],
+  weight: ["400", "700"],
+});
+
 export const metadata: Metadata = {
-  title: `${wedding.names} — Wedding Invitation`,
-  description: `${wedding.tagline}. ${wedding.dateLabel} at ${wedding.venue.name}.`,
+  title: `${wedding.names} — Kad Jemputan`,
+  description: `${wedding.tagline}. ${wedding.dateLabel} di ${wedding.venue.name}.`,
   openGraph: {
-    title: `You're invited to the wedding of ${wedding.names}`,
+    title: `Anda dijemput ke majlis perkahwinan ${wedding.names}`,
     description: `${wedding.dateLabel} · ${wedding.venue.name}, ${wedding.venue.city}`,
     type: "website",
   },
@@ -40,7 +46,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${figtree.variable} ${cormorant.variable} ${greatVibes.variable} h-full antialiased`}
+      className={`${figtree.variable} ${cormorant.variable} ${greatVibes.variable} ${amiri.variable} h-full antialiased`}
     >
       <body className="min-h-full bg-[#efe6db] font-sans text-ink">
         <link rel="preload" href={wedding.music.src} as="audio" />

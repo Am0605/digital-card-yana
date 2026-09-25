@@ -14,8 +14,8 @@ export function Venue() {
   return (
     <section id="venue" className="scroll-mt-6 px-6 py-20 sm:py-24">
       <FadeIn>
-        <SectionEyebrow>Venue & location</SectionEyebrow>
-        <SectionTitle>Join us here</SectionTitle>
+        <SectionEyebrow>Tempat & lokasi</SectionEyebrow>
+        <SectionTitle>Majlis di sini</SectionTitle>
         <div className="mt-6">
           <Ornament />
         </div>
@@ -41,17 +41,29 @@ export function Venue() {
             {wedding.venue.details}
           </p>
 
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
-            <motion.a
-              href={wedding.venue.mapUrl}
-              target="_blank"
-              rel="noreferrer"
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              className="inline-flex items-center justify-center rounded-full border border-gold/40 bg-stone px-6 py-3 text-xs font-medium uppercase tracking-[0.2em] text-ink transition-colors hover:border-gold hover:bg-champagne/40"
-            >
-              Open in Maps
-            </motion.a>
+          <div className="mt-8 flex flex-col gap-3">
+            <div className="grid grid-cols-2 gap-3">
+              <motion.a
+                href={wedding.venue.mapUrl}
+                target="_blank"
+                rel="noreferrer"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                className="inline-flex items-center justify-center rounded-full border border-gold/40 bg-stone px-4 py-3 text-center text-xs font-medium uppercase tracking-[0.16em] text-ink transition-colors hover:border-gold hover:bg-champagne/40"
+              >
+                Google Map
+              </motion.a>
+              <motion.a
+                href={wedding.venue.wazeUrl}
+                target="_blank"
+                rel="noreferrer"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                className="inline-flex items-center justify-center rounded-full border border-gold/40 bg-stone px-4 py-3 text-center text-xs font-medium uppercase tracking-[0.16em] text-ink transition-colors hover:border-gold hover:bg-champagne/40"
+              >
+                Waze
+              </motion.a>
+            </div>
             <AddToCalendar />
           </div>
         </div>

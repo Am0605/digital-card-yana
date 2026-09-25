@@ -26,7 +26,7 @@ export function getGoogleCalendarUrl() {
   const { start, end } = getEventBounds();
   const params = new URLSearchParams({
     action: "TEMPLATE",
-    text: `The Wedding of ${wedding.names}`,
+    text: `Majlis perkahwinan ${wedding.names}`,
     dates: `${toUtcStamp(start)}/${toUtcStamp(end)}`,
     details: `${wedding.tagline}\n\n${wedding.venue.name}\n${wedding.venue.address}, ${wedding.venue.city}`,
     location: `${wedding.venue.name}, ${wedding.venue.address}, ${wedding.venue.city}`,
@@ -52,24 +52,10 @@ export function getIcsContents() {
     `DTSTAMP:${stamp}`,
     `DTSTART:${toUtcStamp(start)}`,
     `DTEND:${toUtcStamp(end)}`,
-    `SUMMARY:${icsEscape(`The Wedding of ${wedding.names}`)}`,
+    `SUMMARY:${icsEscape(`Majlis perkahwinan ${wedding.names}`)}`,
     `DESCRIPTION:${icsEscape(`${wedding.tagline}\n${wedding.venue.details}`)}`,
     `LOCATION:${icsEscape(`${wedding.venue.name}, ${wedding.venue.address}, ${wedding.venue.city}`)}`,
     "END:VEVENT",
     "END:VCALENDAR",
   ].join("\r\n");
-}
-
-export function downloadIcsFile() {
-  const blob = new Blob([getIcsContents()], {
-    type: "text/calendar;charset=utf-8",
-  });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = `${wedding.couple.partnerOne}-${wedding.couple.partnerTwo}-wedding.ics`.toLowerCase();
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
-  URL.revokeObjectURL(url);
 }

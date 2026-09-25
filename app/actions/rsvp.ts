@@ -2,6 +2,7 @@
 
 import {
   attendanceOptions,
+  isGuestCount,
   mealOptions,
   type Attendance,
   type MealPreference,
@@ -31,25 +32,29 @@ export async function submitRsvp(
   const fieldErrors: RsvpFieldErrors = {};
 
   if (fullName.length < 2) {
-    fieldErrors.fullName = "Please enter your full name.";
+    fieldErrors.fullName = "Sila masukkan nama penuh.";
   }
 
   if (!EMAIL_RE.test(email)) {
-    fieldErrors.email = "Please enter a valid email address.";
+    fieldErrors.email = "Sila masukkan alamat e-mel yang sah.";
   }
 
   if (!attendanceValues.has(attendance as Attendance)) {
-    fieldErrors.attendance = "Please let us know if you can celebrate with us.";
+    fieldErrors.attendance = "Sila maklumkan sama ada anda dapat hadir.";
   }
 
   if (attendance === "attending" && !mealValues.has(mealPreference as MealPreference)) {
-    fieldErrors.mealPreference = "Please choose a meal preference.";
+    fieldErrors.mealPreference = "Sila pilih hidangan.";
+  }
+
+  if (attendance === "attending" && !isGuestCount(plusOneName)) {
+    fieldErrors.plusOneName = "Sila pilih bilangan tetamu dari 1 hingga 10.";
   }
 
   if (Object.keys(fieldErrors).length > 0) {
     return {
       status: "error",
-      message: "Please check the highlighted fields and try again.",
+      message: "Sila semak ruangan yang ditanda dan cuba lagi.",
       fieldErrors,
     };
   }
@@ -59,7 +64,7 @@ export async function submitRsvp(
   if (!webhookUrl) {
     return {
       status: "error",
-      message: "RSVP is not configured yet. Please try again later.",
+      message: "Borang kehadiran belum disediakan. Sila cuba sebentar lagi.",
     };
   }
 
@@ -88,18 +93,18 @@ export async function submitRsvp(
     if (response.status >= 400) {
       return {
         status: "error",
-        message: "We could not save your RSVP just now. Please try again.",
+        message: "Kehadiran anda tidak dapat disimpan. Sila cuba lagi.",
       };
     }
 
     return {
       status: "success",
-      message: "Thank you — your RSVP has been received with love.",
+      message: "Terima kasih. Kehadiran anda telah kami terima.",
     };
   } catch {
     return {
       status: "error",
-      message: "Something went wrong on the way to our guestbook. Please try again.",
+      message: "Ada sedikit gangguan. Sila cuba lagi.",
     };
   }
 }

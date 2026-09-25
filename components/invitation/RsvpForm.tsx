@@ -11,7 +11,9 @@ import {
 } from "@/components/invitation/SectionHeader";
 import {
   attendanceOptions,
+  guestCountOptions,
   initialRsvpState,
+  isGuestCount,
   mealOptions,
   type Attendance,
   type RsvpFieldErrors,
@@ -27,22 +29,27 @@ function validateRsvp(
   const fullName = String(formData.get("fullName") ?? "").trim();
   const email = String(formData.get("email") ?? "").trim();
   const mealPreference = String(formData.get("mealPreference") ?? "").trim();
+  const guestCount = String(formData.get("plusOneName") ?? "").trim();
   const errors: RsvpFieldErrors = {};
 
   if (fullName.length < 2) {
-    errors.fullName = "Please enter your full name.";
+    errors.fullName = "Sila masukkan nama penuh.";
   }
 
   if (!EMAIL_RE.test(email)) {
-    errors.email = "Please enter a valid email address.";
+    errors.email = "Sila masukkan alamat e-mel yang sah.";
   }
 
   if (attendance !== "attending" && attendance !== "declining") {
-    errors.attendance = "Please let us know if you can celebrate with us.";
+    errors.attendance = "Sila maklumkan sama ada anda dapat hadir.";
   }
 
   if (attendance === "attending" && !mealPreference) {
-    errors.mealPreference = "Please choose a meal preference.";
+    errors.mealPreference = "Sila pilih hidangan.";
+  }
+
+  if (attendance === "attending" && !isGuestCount(guestCount)) {
+    errors.plusOneName = "Sila pilih bilangan tetamu dari 1 hingga 10.";
   }
 
   return errors;
@@ -100,11 +107,11 @@ function SuccessState({ attending }: { attending: boolean }) {
           />
         </motion.svg>
       </div>
-      <h3 className="mt-6 font-serif text-3xl text-ink">With all our thanks</h3>
+      <h3 className="mt-6 font-serif text-3xl text-ink">Terima kasih</h3>
       <p className="mx-auto mt-4 max-w-sm font-sans text-sm leading-7 text-ink-soft">
         {attending
-          ? "Your reply is with us. We cannot wait to celebrate this day with you."
-          : "Your reply is with us. You will be missed, and you remain in our hearts."}
+          ? "Jawapan anda telah kami terima. Kami tidak sabar untuk beraya bersama anda."
+          : "Jawapan anda telah kami terima. Kehadiran anda akan dirindui, dan anda tetap di hati kami."}
       </p>
     </motion.div>
   );
@@ -136,13 +143,13 @@ export function RsvpForm() {
   return (
     <section id="rsvp" className="scroll-mt-6 px-6 py-20 sm:py-24">
       <FadeIn>
-        <SectionEyebrow>Kindly reply</SectionEyebrow>
-        <SectionTitle>RSVP</SectionTitle>
+        <SectionEyebrow>Sila sahkan</SectionEyebrow>
+        <SectionTitle>Kehadiran</SectionTitle>
         <div className="mt-6">
           <Ornament />
         </div>
         <p className="mx-auto mt-8 max-w-md text-center font-serif text-lg italic text-ink-soft">
-          Please respond by {wedding.rsvpDeadline}
+          Sila balas sebelum {wedding.rsvpDeadline}
         </p>
       </FadeIn>
 
@@ -162,7 +169,7 @@ export function RsvpForm() {
             >
               <label className="block">
                 <span className="mb-2 block text-[0.68rem] font-medium uppercase tracking-[0.2em] text-ink-soft">
-                  Full Name
+                  Nama penuh
                 </span>
                 <input
                   name="fullName"
@@ -176,7 +183,7 @@ export function RsvpForm() {
 
               {/* <label className="block">
                 <span className="mb-2 block text-[0.68rem] font-medium uppercase tracking-[0.2em] text-ink-soft">
-                  Email
+                  E-mel
                 </span>
                 <input
                   name="email"
@@ -190,7 +197,7 @@ export function RsvpForm() {
 
               <fieldset>
                 <legend className="mb-3 text-[0.68rem] font-medium uppercase tracking-[0.2em] text-ink-soft">
-                  Attendance
+                  Kehadiran
                 </legend>
                 <div className="grid gap-3 sm:grid-cols-2">
                   {attendanceOptions.map((option) => {
@@ -232,7 +239,7 @@ export function RsvpForm() {
 
               {/* <fieldset>
                 <legend className="mb-3 text-[0.68rem] font-medium uppercase tracking-[0.2em] text-ink-soft">
-                  Meal Preference
+                  Pilihan hidangan
                 </legend>
                 <div className="grid grid-cols-3 gap-2">
                   {mealOptions.map((option) => (
@@ -265,14 +272,36 @@ export function RsvpForm() {
                   >
                     <label className="block pt-1">
                       <span className="mb-2 block text-[0.68rem] font-medium uppercase tracking-[0.2em] text-ink-soft">
-                        Pax
+                        Bilangan tetamu
                       </span>
-                      <input
-                        name="plusOneName"
-                        type="text"
-                        placeholder="Optional"
-                        className="w-full rounded-2xl border border-gold/25 bg-white/80 px-4 py-3.5 font-sans text-sm text-ink outline-none transition placeholder:text-ink-soft/50 focus:border-gold focus:ring-2 focus:ring-gold/20"
-                      />
+                      <span className="relative block">
+                        <select
+                          name="plusOneName"
+                          required={isAttending}
+                          defaultValue=""
+                          className="w-full appearance-none rounded-2xl border border-gold/25 bg-white/80 px-4 py-3.5 font-sans text-sm text-ink outline-none transition focus:border-gold focus:ring-2 focus:ring-gold/20"
+                        >
+                          <option value="" disabled>
+                            Pilih
+                          </option>
+                          {guestCountOptions.map((count) => (
+                            <option key={count} value={count}>
+                              {count}
+                            </option>
+                          ))}
+                        </select>
+                        <svg
+                          viewBox="0 0 20 20"
+                          aria-hidden="true"
+                          className="pointer-events-none absolute top-1/2 right-4 h-4 w-4 -translate-y-1/2 text-ink-soft"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="1.6"
+                        >
+                          <path d="M5 7.5 10 12.5 15 7.5" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </span>
+                      <FieldError message={errors.plusOneName} />
                     </label>
                   </motion.div>
                 ) : null}
@@ -280,12 +309,12 @@ export function RsvpForm() {
 
               {/* <label className="block">
                 <span className="mb-2 block text-[0.68rem] font-medium uppercase tracking-[0.2em] text-ink-soft">
-                  Dietary Restrictions
+                  Pantang makanan
                 </span>
                 <input
                   name="dietaryRestrictions"
                   type="text"
-                  placeholder="Allergies, vegetarian notes, or none"
+                  placeholder="Alahan, catatan sayuran, atau tiada"
                   className="w-full rounded-2xl border border-gold/25 bg-white/80 px-4 py-3.5 font-sans text-sm text-ink outline-none transition placeholder:text-ink-soft/50 focus:border-gold focus:ring-2 focus:ring-gold/20"
                 />
               </label> */}
@@ -306,10 +335,10 @@ export function RsvpForm() {
                 {pending ? (
                   <>
                     <span className="h-4 w-4 animate-spin rounded-full border-2 border-stone/30 border-t-stone" />
-                    Sending
+                    Menghantar
                   </>
                 ) : (
-                  "Send RSVP"
+                  "Hantar"
                 )}
               </motion.button>
             </motion.form>

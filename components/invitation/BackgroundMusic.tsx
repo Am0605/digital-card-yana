@@ -60,7 +60,7 @@ export function MusicToggle({
       whileHover={{ scale: 1.06 }}
       whileTap={{ scale: 0.95 }}
       aria-pressed={playing}
-      aria-label={playing ? `Pause ${wedding.music.title}` : `Play ${wedding.music.title}`}
+      aria-label={playing ? `Jeda ${wedding.music.title}` : `Mainkan ${wedding.music.title}`}
       className="relative flex h-12 w-12 items-center justify-center rounded-full border border-gold/35 bg-stone text-ink shadow-[0_10px_24px_rgba(63,52,44,0.16)]"
     >
       <motion.span

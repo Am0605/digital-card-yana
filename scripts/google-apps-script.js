@@ -3,7 +3,7 @@
  *
  * 1. Create a Google Sheet with a tab named "RSVPs".
  * 2. Add a header row:
- *    Timestamp | Full Name | Email | Attendance | Meal Preference | Dietary Restrictions | Plus-One Name
+ *    Timestamp | Full Name | Email | Attendance | Meal Preference | Dietary Restrictions | Bilangan tetamu
  * 3. Extensions → Apps Script, paste this file, then Deploy → New deployment → Web app.
  *    Execute as: Me
  *    Who has access: Anyone

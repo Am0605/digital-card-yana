@@ -22,7 +22,7 @@ export function Hero() {
         transition={{ duration: 0.8, ease }}
         className="relative mb-6 text-[0.7rem] font-medium uppercase tracking-[0.38em] text-gold-deep"
       >
-        The wedding of
+        Majlis perkahwinan
       </motion.p>
 
       <motion.h1
@@ -78,22 +78,13 @@ export function Hero() {
       </div>
 
       <motion.a
-        href="#rsvp"
-        whileHover={{ scale: 1.04 }}
-        whileTap={{ scale: 0.97 }}
-        className="relative mt-10 inline-flex items-center justify-center rounded-full bg-ink px-8 py-3 text-xs font-medium uppercase tracking-[0.24em] text-stone shadow-[0_12px_30px_rgba(63,52,44,0.18)] transition-colors hover:bg-gold-deep"
-      >
-        RSVP
-      </motion.a>
-
-      <motion.a
-        href="#story"
+        href="#note"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.1 }}
         className="absolute bottom-24 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 text-[0.62rem] uppercase tracking-[0.28em] text-ink-soft"
       >
-        <span>Open the card</span>
+        <span>Buka kad</span>
         <motion.span
           animate={{ y: [0, 6, 0] }}
           transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}

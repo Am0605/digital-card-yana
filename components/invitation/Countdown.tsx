@@ -26,7 +26,7 @@ function getTimeLeft(target: Date): TimeLeft | null {
   };
 }
 
-const unitLabels = ["Days", "Hours", "Minutes", "Seconds"] as const;
+const unitLabels = ["Hari", "Jam", "Minit", "Saat"] as const;
 
 export function Countdown() {
   const target = useMemo(() => new Date(wedding.start), []);
@@ -45,17 +45,17 @@ export function Countdown() {
   if (ready && !timeLeft) {
     return (
       <p className="mt-10 font-serif text-xl italic text-blush-deep">
-        Today we celebrate.
+        Hari ini kita beraya.
       </p>
     );
   }
 
   const units: Array<[string, string]> = timeLeft
     ? [
-        ["Days", String(timeLeft.days).padStart(2, "0")],
-        ["Hours", String(timeLeft.hours).padStart(2, "0")],
-        ["Minutes", String(timeLeft.minutes).padStart(2, "0")],
-        ["Seconds", String(timeLeft.seconds).padStart(2, "0")],
+        ["Hari", String(timeLeft.days).padStart(2, "0")],
+        ["Jam", String(timeLeft.hours).padStart(2, "0")],
+        ["Minit", String(timeLeft.minutes).padStart(2, "0")],
+        ["Saat", String(timeLeft.seconds).padStart(2, "0")],
       ]
     : unitLabels.map((label) => [label, "--"]);
 
