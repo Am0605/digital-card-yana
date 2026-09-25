@@ -20,7 +20,7 @@ export async function fetchSheet(url: string, init: RequestInit = {}) {
   return response;
 }
 
-export function readSheetResult<T extends { ok?: boolean }>(body: string): T | null {
+export function readSheetResult<T extends { ok?: boolean; error?: string }>(body: string): T | null {
   try {
     const result = JSON.parse(body) as T;
     if (typeof result.ok === "boolean") return result;
