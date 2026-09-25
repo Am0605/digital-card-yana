@@ -33,6 +33,31 @@ body {
   font-family: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
 }
 
+.wish-marquee {
+  animation: wish-marquee linear infinite;
+}
+
+.wish-marquee.is-paused {
+  animation-play-state: paused;
+}
+
+@keyframes wish-marquee {
+  from {
+    transform: translateX(-50%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wish-marquee {
+    animation: none;
+    transform: none;
+  }
+}
+
 .paper-grain {
   background-image:
     radial-gradient(rgba(47, 38, 31, 0.045) 0.6px, transparent 0.6px),

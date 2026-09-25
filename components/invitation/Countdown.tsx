@@ -45,7 +45,7 @@ export function Countdown() {
   if (ready && !timeLeft) {
     return (
       <p className="mt-10 font-serif text-xl italic text-blush-deep">
-        Hari ini kita beraya.
+        Hari ini kita meraikan perkahwinan Imran dan Norliyana.
       </p>
     );
   }

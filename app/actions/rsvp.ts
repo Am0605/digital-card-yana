@@ -1,5 +1,6 @@
 "use server";
 
+import { fetchSheet, readSheetResult } from "@/lib/google-sheet";
 import {
   attendanceOptions,
   isGuestCount,
@@ -72,17 +73,18 @@ export async function submitRsvp(
   };
 
   try {
-    const response = await fetch(webhookUrl, {
+    const response = await fetchSheet(webhookUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(payload),
-      redirect: "follow",
     });
+    const body = await response.text();
+    const result = readSheetResult(body);
 
-    // Apps Script often 302s after doPost has already appended the row.
-    if (response.status >= 400) {
+    if (!response.ok || result?.ok === false) {
+      console.error("RSVP sheet error", response.status, result?.error ?? body.slice(0, 200));
       return {
         status: "error",
         message: "Kehadiran anda tidak dapat disimpan. Sila cuba lagi.",
@@ -93,10 +95,12 @@ export async function submitRsvp(
       status: "success",
       message: "Terima kasih. Kehadiran anda telah kami terima.",
     };
-  } catch {
+  } catch (error) {
+    console.error("RSVP sheet request failed", error);
     return {
       status: "error",
       message: "Ada sedikit gangguan. Sila cuba lagi.",
     };
   }
 }
+

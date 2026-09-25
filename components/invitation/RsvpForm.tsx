@@ -1,6 +1,7 @@
 "use client";
 
-import { useActionState, useState, type FormEvent } from "react";
+import { useActionState, useEffect, useState, type FormEvent } from "react";
+import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { submitRsvp } from "@/app/actions/rsvp";
 import { FadeIn } from "@/components/invitation/FadeIn";
@@ -102,7 +103,7 @@ function SuccessState({ attending }: { attending: boolean }) {
       <h3 className="mt-6 font-serif text-3xl text-ink">Terima kasih</h3>
       <p className="mx-auto mt-4 max-w-sm font-sans text-sm leading-7 text-ink-soft">
         {attending
-          ? "Jawapan anda telah kami terima. Kami tidak sabar untuk beraya bersama anda."
+          ? "Jawapan anda telah kami terima. Kami tidak sabar untuk meraikan perkahwinan Imran dan Norliyana bersama anda."
           : "Jawapan anda telah kami terima. Kehadiran anda akan dirindui, dan anda tetap di hati kami."}
       </p>
     </motion.div>
@@ -110,6 +111,7 @@ function SuccessState({ attending }: { attending: boolean }) {
 }
 
 export function RsvpForm() {
+  const router = useRouter();
   const [state, formAction, pending] = useActionState(submitRsvp, initialRsvpState);
   const [attendance, setAttendance] = useState<Attendance | "">("");
   const [fieldErrors, setFieldErrors] = useState<RsvpFieldErrors>({});
@@ -117,6 +119,10 @@ export function RsvpForm() {
 
   const errors = { ...state.fieldErrors, ...fieldErrors };
   const isAttending = attendance === "attending";
+
+  useEffect(() => {
+    if (state.status === "success") router.refresh();
+  }, [router, state.status]);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     const formData = new FormData(event.currentTarget);

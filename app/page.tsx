@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { DressCode } from "@/components/invitation/DressCode";
 import { FloralBackground } from "@/components/invitation/Floral";
 import { Hero } from "@/components/invitation/Hero";
@@ -6,6 +7,7 @@ import { InvitationShell } from "@/components/invitation/InvitationShell";
 import { InvitationNote } from "@/components/invitation/InvitationNote";
 import { RsvpForm } from "@/components/invitation/RsvpForm";
 import { Venue } from "@/components/invitation/Venue";
+import { Wishes } from "@/components/invitation/Wishes";
 
 export default function Home() {
   return (
@@ -19,6 +21,9 @@ export default function Home() {
             <Venue />
             <DressCode />
             <RsvpForm />
+            <Suspense fallback={null}>
+              <Wishes />
+            </Suspense>
             <InvitationFooter />
           </div>
         </div>

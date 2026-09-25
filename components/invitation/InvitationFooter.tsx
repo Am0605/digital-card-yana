@@ -14,7 +14,7 @@ export function InvitationFooter() {
           {wedding.dateLabel}
         </p>
         <p className="mt-6 font-serif text-sm italic text-ink-soft">
-          Dengan kasih, kami menanti untuk beraya bersama anda.
+          Dengan kasih, kami menanti untuk meraikan bersama anda.
         </p>
       </div>
     </FadeIn>
