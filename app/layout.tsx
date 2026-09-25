@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Amiri, Cormorant_Garamond, Figtree, Great_Vibes } from "next/font/google";
+import Script from "next/script";
 import { wedding } from "@/lib/wedding";
 import "./globals.css";
 
@@ -49,6 +50,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${figtree.variable} ${cormorant.variable} ${greatVibes.variable} ${amiri.variable} h-full antialiased`}
     >
       <body className="min-h-full bg-[#e4d5c6] font-sans text-ink">
+        <Script id="reset-scroll" strategy="beforeInteractive">
+          {`history.scrollRestoration="manual";if(location.hash){history.replaceState(null,"",location.pathname+location.search);}window.scrollTo(0,0);`}
+        </Script>
         <link rel="preload" href={wedding.music.src} as="audio" />
         {children}
       </body>

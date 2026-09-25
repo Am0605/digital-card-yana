@@ -60,7 +60,7 @@ export function Countdown() {
     : unitLabels.map((label) => [label, "--"]);
 
   return (
-    <div className="mt-10 grid w-full max-w-md grid-cols-4 gap-2 sm:gap-3">
+    <div className="mt-6 grid w-full max-w-md grid-cols-4 gap-2 sm:gap-3">
       {units.map(([label, value], index) => (
         <motion.div
           key={label}
