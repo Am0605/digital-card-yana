@@ -1,5 +1,5 @@
 import { FadeIn } from "@/components/invitation/FadeIn";
-import { WishReel } from "@/components/invitation/WishReel";
+import { WishRail } from "@/components/invitation/WishRail";
 import { Ornament, SectionEyebrow, SectionTitle } from "@/components/invitation/SectionHeader";
 import { fetchWishes } from "@/lib/wishes";
 
@@ -17,7 +17,7 @@ export async function Wishes() {
         </div>
       </FadeIn>
 
-      <WishReel wishes={wishes} />
+      <WishRail wishes={wishes} />
     </section>
   );
 }
