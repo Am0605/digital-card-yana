@@ -1,4 +1,3 @@
-import { Contact } from "@/components/invitation/Contact";
 import { DressCode } from "@/components/invitation/DressCode";
 import { Hero } from "@/components/invitation/Hero";
 import { InvitationFooter } from "@/components/invitation/InvitationFooter";
@@ -15,7 +14,6 @@ export default function Home() {
         <InvitationNote />
         <Venue />
         <DressCode />
-        <Contact />
         <RsvpForm />
         <InvitationFooter />
       </main>

@@ -4,14 +4,21 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { CalendarChoices } from "@/components/invitation/AddToCalendar";
 import { MusicToggle } from "@/components/invitation/BackgroundMusic";
+import { ContactPanel } from "@/components/invitation/Contact";
 import { wedding } from "@/lib/wedding";
 
-type NavId = "venue" | "contact" | "rsvp";
+type NavId = "venue" | "rsvp";
+type Panel = "calendar" | "contact";
 
-const links: Array<{ id: NavId; label: string; icon: "pin" | "phone" | "rsvp" }> = [
-  { id: "venue", label: "Lokasi", icon: "pin" },
-  { id: "contact", label: "Hubungi", icon: "phone" },
-  { id: "rsvp", label: "RSVP", icon: "rsvp" },
+const items: Array<
+  | { type: "calendar"; label: string; icon: "calendar" }
+  | { type: "contact"; label: string; icon: "phone" }
+  | { type: "link"; id: NavId; label: string; icon: "pin" | "rsvp" }
+> = [
+  { type: "calendar", label: "Kalendar", icon: "calendar" },
+  { type: "link", id: "venue", label: "Lokasi", icon: "pin" },
+  { type: "contact", label: "Hubungi", icon: "phone" },
+  { type: "link", id: "rsvp", label: "RSVP", icon: "rsvp" },
 ];
 
 function NavIcon({ name }: { name: "calendar" | "pin" | "phone" | "rsvp" }) {
@@ -61,11 +68,11 @@ export function BottomNav({
   onToggleMusic: () => void;
 }) {
   const [active, setActive] = useState<NavId | "">("");
-  const [calendarOpen, setCalendarOpen] = useState(false);
+  const [panel, setPanel] = useState<Panel | null>(null);
 
   useEffect(() => {
-    const elements = links
-      .map((link) => document.getElementById(link.id))
+    const elements = items
+      .flatMap((item) => (item.type === "link" ? [document.getElementById(item.id)] : []))
       .filter((element): element is HTMLElement => element !== null);
 
     const observer = new IntersectionObserver(
@@ -74,7 +81,7 @@ export function BottomNav({
           .filter((entry) => entry.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
 
-        if (visible?.target.id === "venue" || visible?.target.id === "contact" || visible?.target.id === "rsvp") {
+        if (visible?.target.id === "venue" || visible?.target.id === "rsvp") {
           setActive(visible.target.id);
         }
       },
@@ -86,17 +93,17 @@ export function BottomNav({
   }, []);
 
   useEffect(() => {
-    if (!calendarOpen) return;
+    if (!panel) return;
 
     function close(event: PointerEvent) {
       const target = event.target as Element | null;
-      if (target?.closest("[data-calendar-menu]")) return;
-      setCalendarOpen(false);
+      if (target?.closest("[data-nav-menu]")) return;
+      setPanel(null);
     }
 
     window.addEventListener("pointerdown", close);
     return () => window.removeEventListener("pointerdown", close);
-  }, [calendarOpen]);
+  }, [panel]);
 
   return (
     <AnimatePresence>
@@ -109,57 +116,71 @@ export function BottomNav({
           className="fixed inset-x-0 bottom-0 z-40 px-3 pb-[max(0.7rem,env(safe-area-inset-bottom))]"
           aria-label="Jemputan"
         >
-          <div className="relative mx-auto max-w-xl" data-calendar-menu="">
+          <div className="relative mx-auto max-w-xl" data-nav-menu="">
             <div className="absolute -top-6 left-1/2 z-10 -translate-x-1/2">
               <MusicToggle playing={playing} onToggle={onToggleMusic} />
             </div>
 
             <AnimatePresence>
-              {calendarOpen ? (
+              {panel ? (
                 <motion.div
+                  key={panel}
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 8 }}
-                  className="absolute inset-x-0 bottom-[calc(100%+2.4rem)] z-20 overflow-hidden rounded-2xl border border-gold/25 bg-white/95 p-2 shadow-[0_16px_40px_rgba(63,52,44,0.12)]"
+                  className="absolute inset-x-0 bottom-[calc(100%+2.4rem)] z-20 max-h-[min(70dvh,32rem)] overflow-y-auto rounded-2xl border border-gold/25 bg-white/95 shadow-[0_16px_40px_rgba(63,52,44,0.12)]"
                 >
-                  <div className="px-3 pt-3 pb-2 text-center">
-                    <p className="font-serif text-lg leading-snug text-ink">{wedding.dateLabel}</p>
-                    <p className="mt-1 font-serif text-sm italic text-ink-soft">{wedding.timeLabel}</p>
-                  </div>
-                  <CalendarChoices onDone={() => setCalendarOpen(false)} />
+                  {panel === "calendar" ? (
+                    <div className="p-2">
+                      <div className="px-3 pt-3 pb-2 text-center">
+                        <p className="font-serif text-lg leading-snug text-ink">{wedding.dateLabel}</p>
+                        <p className="mt-1 font-serif text-sm italic text-ink-soft">{wedding.timeLabel}</p>
+                      </div>
+                      <CalendarChoices onDone={() => setPanel(null)} />
+                    </div>
+                  ) : (
+                    <ContactPanel />
+                  )}
                 </motion.div>
               ) : null}
             </AnimatePresence>
 
             <div className="grid grid-cols-4 rounded-[1.6rem] border border-gold/20 bg-stone/95 pt-7 pb-2 shadow-[0_-10px_40px_rgba(63,52,44,0.12)] backdrop-blur-md">
-              <div>
-                <button
-                  type="button"
-                  onClick={() => setCalendarOpen((open) => !open)}
-                  aria-expanded={calendarOpen}
-                  className={`flex w-full flex-col items-center gap-1 px-1 py-1 text-[0.62rem] uppercase tracking-[0.14em] ${
-                    calendarOpen ? "text-gold-deep" : "text-ink-soft"
-                  }`}
-                >
-                  <NavIcon name="calendar" />
-                  Kalendar
-                </button>
-              </div>
+              {items.map((item) => {
+                if (item.type === "link") {
+                  return (
+                    <a
+                      key={item.id}
+                      href={`#${item.id}`}
+                      onClick={() => setPanel(null)}
+                      aria-current={active === item.id ? "true" : undefined}
+                      className={`flex flex-col items-center gap-1 px-1 py-1 text-[0.62rem] uppercase tracking-[0.14em] ${
+                        active === item.id ? "text-gold-deep" : "text-ink-soft"
+                      }`}
+                    >
+                      <NavIcon name={item.icon} />
+                      {item.label}
+                    </a>
+                  );
+                }
 
-              {links.map((link) => (
-                <a
-                  key={link.id}
-                  href={`#${link.id}`}
-                  onClick={() => setCalendarOpen(false)}
-                  aria-current={active === link.id ? "true" : undefined}
-                  className={`flex flex-col items-center gap-1 px-1 py-1 text-[0.62rem] uppercase tracking-[0.14em] ${
-                    active === link.id ? "text-gold-deep" : "text-ink-soft"
-                  }`}
-                >
-                  <NavIcon name={link.icon} />
-                  {link.label}
-                </a>
-              ))}
+                const selected = panel === item.type;
+
+                return (
+                  <button
+                    key={item.type}
+                    type="button"
+                    onClick={() => setPanel(selected ? null : item.type)}
+                    aria-expanded={selected}
+                    className={`flex flex-col items-center gap-1 px-1 py-1 text-[0.62rem] uppercase tracking-[0.14em] ${
+                      selected ? "text-gold-deep" : "text-ink-soft"
+                    }`}
+                  >
+                    <NavIcon name={item.icon} />
+                    {item.label}
+                  </button>
+                );
+              })}
             </div>
           </div>
         </motion.nav>

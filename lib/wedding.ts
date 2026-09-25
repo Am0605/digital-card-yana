@@ -12,27 +12,54 @@ export const wedding = {
   tagline:
     "Bersama keluarga, kami mempersilakan kehadiran anda untuk meraikan majlis perkahwinan ini",
   dateLabel: "Sabtu, 7 November 2026",
-  timeLabel: "Pukul sebelas pagi",
+  timeLabel: "11:00 pagi - 4:30 petang",
   start: "2026-11-07T11:00:00+08:00",
   end: "2026-11-07T16:30:00+08:00",
   timezone: "Asia/Singapore",
   rsvpDeadline: "1 November 2026",
   contact: {
-    note: "Sebarang pertanyaan tentang majlis, arah tuju, atau tempat duduk — kami sedia membantu.",
-    people: [
+    groups: [
       {
-        side: "Pihak lelaki",
-        name: "Khairuddin",
-        role: "Bapa pihak lelaki",
-        phone: "0123275452",
-        whatsapp: "",
+        title: "Pihak lelaki",
+        sections: [
+          {
+            label: "",
+            people: [
+              {
+                name: "Khairuddin",
+                role: "Bapa pihak lelaki",
+                phone: "0123275452",
+                whatsapp: "",
+              },
+            ],
+          },
+          {
+            label: "Adik-beradik",
+            people: [
+              { name: "Kak Nor", role: "", phone: "0123276450", whatsapp: "" },
+              { name: "Hawa", role: "", phone: "0122881452", whatsapp: "" },
+              { name: "Adam", role: "", phone: "0176358633", whatsapp: "" },
+            ],
+          },
+        ],
       },
       {
-        side: "Pihak perempuan",
-        name: "Rosnani",
-        role: "Ibu pihak perempuan",
-        phone: "012257552",
-        whatsapp: "",
+        title: "Pihak perempuan",
+        sections: [
+          {
+            label: "",
+            people: [
+              {
+                name: "Rosnani",
+                role: "Ibu pihak perempuan",
+                phone: "012257552",
+                whatsapp: "",
+              },
+              { name: "Intan", role: "", phone: "0109264100", whatsapp: "" },
+              { name: "Angah", role: "", phone: "01170144211", whatsapp: "" },
+            ],
+          },
+        ],
       },
     ],
   },

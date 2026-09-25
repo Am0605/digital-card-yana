@@ -1,12 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { FadeIn } from "@/components/invitation/FadeIn";
-import {
-  Ornament,
-  SectionEyebrow,
-  SectionTitle,
-} from "@/components/invitation/SectionHeader";
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { wedding } from "@/lib/wedding";
 
 function PhoneIcon() {
@@ -37,56 +32,105 @@ function whatsappHref(phone: string, whatsapp: string) {
   return `https://wa.me/${international}`;
 }
 
-export function Contact() {
+function ContactPerson({
+  name,
+  role,
+  phone,
+  whatsapp,
+}: {
+  name: string;
+  role: string;
+  phone: string;
+  whatsapp: string;
+}) {
   return (
-    <section id="contact" className="scroll-mt-6 px-6 py-20 sm:py-24">
-      <FadeIn>
-        <SectionEyebrow>Hubungi</SectionEyebrow>
-        <SectionTitle>Hubungi kami</SectionTitle>
-        <div className="mt-6">
-          <Ornament />
-        </div>
-        <p className="mx-auto mt-8 max-w-md text-center font-serif text-lg leading-8 italic text-ink-soft">
-          {wedding.contact.note}
-        </p>
-      </FadeIn>
-
-      <div className="mx-auto mt-10 flex max-w-md flex-col gap-4">
-        {wedding.contact.people.map((person, index) => (
-          <FadeIn key={person.phone} delay={index * 0.08}>
-            <article className="rounded-[1.75rem] border border-gold/20 bg-white/55 px-6 py-6 text-center shadow-[0_16px_40px_rgba(63,52,44,0.06)]">
-              <p className="text-[0.68rem] font-medium uppercase tracking-[0.22em] text-gold-deep">
-                {person.side}
-              </p>
-              <p className="mt-2 font-serif text-2xl text-ink">{person.name}</p>
-              <p className="mt-1 font-sans text-sm text-ink-soft">{person.role}</p>
-              <p className="mt-3 font-sans text-sm tracking-wide text-ink">{person.phone}</p>
-              <div className="mt-5 grid grid-cols-2 gap-3">
-                <motion.a
-                  href={phoneHref(person.phone)}
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-ink px-3 py-3 text-[0.68rem] font-medium uppercase tracking-[0.14em] text-stone"
-                >
-                  <PhoneIcon />
-                  Call
-                </motion.a>
-                <motion.a
-                  href={whatsappHref(person.phone, person.whatsapp)}
-                  target="_blank"
-                  rel="noreferrer"
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
-                  className="inline-flex items-center justify-center gap-2 rounded-full border border-gold/40 bg-white/70 px-3 py-3 text-[0.68rem] font-medium uppercase tracking-[0.14em] text-ink"
-                >
-                  <WhatsAppIcon />
-                  WhatsApp
-                </motion.a>
-              </div>
-            </article>
-          </FadeIn>
-        ))}
+    <div className="flex items-center justify-between gap-3 py-2.5">
+      <div className="min-w-0">
+        <p className="font-serif text-base leading-tight text-ink">{name}</p>
+        {role ? <p className="mt-0.5 font-sans text-xs text-ink-soft">{role}</p> : null}
+        <p className="mt-0.5 font-sans text-xs tracking-wide text-ink-soft">{phone}</p>
       </div>
-    </section>
+      <div className="flex shrink-0 gap-2">
+        <a
+          href={phoneHref(phone)}
+          aria-label={`Panggil ${name}`}
+          className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-ink text-stone"
+        >
+          <PhoneIcon />
+        </a>
+        <a
+          href={whatsappHref(phone, whatsapp)}
+          target="_blank"
+          rel="noreferrer"
+          aria-label={`WhatsApp ${name}`}
+          className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-gold/40 bg-white text-ink"
+        >
+          <WhatsAppIcon />
+        </a>
+      </div>
+    </div>
+  );
+}
+
+export function ContactPanel() {
+  const [open, setOpen] = useState<string | null>(null);
+
+  return (
+    <div className="p-2">
+      {wedding.contact.groups.map((group) => {
+        const expanded = open === group.title;
+
+        return (
+          <div key={group.title} className="overflow-hidden">
+            <button
+              type="button"
+              aria-expanded={expanded}
+              onClick={() => setOpen(expanded ? null : group.title)}
+              className="flex w-full items-center justify-between rounded-xl px-3 py-3 text-left text-sm text-ink transition-colors hover:bg-stone"
+            >
+              <span className="font-medium tracking-wide">{group.title}</span>
+              <svg
+                viewBox="0 0 20 20"
+                aria-hidden="true"
+                className={`h-4 w-4 text-ink-soft transition-transform ${expanded ? "rotate-180" : ""}`}
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.6"
+              >
+                <path d="M5 7.5 10 12.5 15 7.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </button>
+            <AnimatePresence initial={false}>
+              {expanded ? (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                  className="overflow-hidden"
+                >
+                  <div className="px-3 pb-2">
+                    {group.sections.map((section) => (
+                      <div key={section.label || group.title}>
+                        {section.label ? (
+                          <p className="pt-1 pb-1 text-[0.68rem] font-medium uppercase tracking-[0.18em] text-gold-deep">
+                            {section.label}
+                          </p>
+                        ) : null}
+                        <div className="divide-y divide-gold/15">
+                          {section.people.map((person) => (
+                            <ContactPerson key={`${person.name}-${person.phone}`} {...person} />
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+              ) : null}
+            </AnimatePresence>
+          </div>
+        );
+      })}
+    </div>
   );
 }

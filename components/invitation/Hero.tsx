@@ -76,23 +76,6 @@ export function Hero() {
       <div className="relative flex w-full justify-center">
         <Countdown />
       </div>
-
-      <motion.a
-        href="#note"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.1 }}
-        className="absolute bottom-24 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 text-[0.62rem] uppercase tracking-[0.28em] text-ink-soft"
-      >
-        <span>Buka kad</span>
-        <motion.span
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-          aria-hidden="true"
-        >
-          ↓
-        </motion.span>
-      </motion.a>
     </header>
   );
 }
