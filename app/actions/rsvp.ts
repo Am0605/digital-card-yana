@@ -3,16 +3,16 @@
 import {
   attendanceOptions,
   isGuestCount,
-  mealOptions,
   type Attendance,
-  type MealPreference,
   type RsvpActionState,
   type RsvpFieldErrors,
 } from "@/lib/rsvp";
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const attendanceValues = new Set(attendanceOptions.map((option) => option.value));
-const mealValues = new Set(mealOptions.map((option) => option.value));
+const attendanceLabels: Record<Attendance, string> = {
+  attending: "Hadir",
+  declining: "Tidak hadir",
+};
 
 function readField(formData: FormData, key: string) {
   return String(formData.get(key) ?? "").trim();
@@ -23,11 +23,9 @@ export async function submitRsvp(
   formData: FormData,
 ): Promise<RsvpActionState> {
   const fullName = readField(formData, "fullName");
-  const email = readField(formData, "email");
   const attendance = readField(formData, "attendance");
-  const mealPreference = readField(formData, "mealPreference");
-  const dietaryRestrictions = readField(formData, "dietaryRestrictions");
-  const plusOneName = readField(formData, "plusOneName");
+  const guestCount = readField(formData, "guestCount");
+  const message = readField(formData, "message");
 
   const fieldErrors: RsvpFieldErrors = {};
 
@@ -35,20 +33,16 @@ export async function submitRsvp(
     fieldErrors.fullName = "Sila masukkan nama penuh.";
   }
 
-  if (!EMAIL_RE.test(email)) {
-    fieldErrors.email = "Sila masukkan alamat e-mel yang sah.";
-  }
-
   if (!attendanceValues.has(attendance as Attendance)) {
     fieldErrors.attendance = "Sila maklumkan sama ada anda dapat hadir.";
   }
 
-  if (attendance === "attending" && !mealValues.has(mealPreference as MealPreference)) {
-    fieldErrors.mealPreference = "Sila pilih hidangan.";
+  if (attendance === "attending" && !isGuestCount(guestCount)) {
+    fieldErrors.guestCount = "Sila pilih bilangan tetamu dari 1 hingga 10.";
   }
 
-  if (attendance === "attending" && !isGuestCount(plusOneName)) {
-    fieldErrors.plusOneName = "Sila pilih bilangan tetamu dari 1 hingga 10.";
+  if (message.length > 500) {
+    fieldErrors.message = "Ucapan terlalu panjang. Sila ringkaskan.";
   }
 
   if (Object.keys(fieldErrors).length > 0) {
@@ -71,11 +65,9 @@ export async function submitRsvp(
   const payload = {
     submittedAt: new Date().toISOString(),
     fullName,
-    email,
-    attendance,
-    mealPreference: attendance === "attending" ? mealPreference : "",
-    dietaryRestrictions,
-    plusOneName: attendance === "attending" ? plusOneName : "",
+    attendance: attendanceLabels[attendance as Attendance],
+    guestCount: attendance === "attending" ? Number(guestCount) : "",
+    message,
     secret: process.env.GOOGLE_SHEETS_SECRET ?? "",
   };
 

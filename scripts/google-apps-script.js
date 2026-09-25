@@ -3,7 +3,7 @@
  *
  * 1. Create a Google Sheet with a tab named "RSVPs".
  * 2. Add a header row:
- *    Timestamp | Full Name | Email | Attendance | Meal Preference | Dietary Restrictions | Bilangan tetamu
+ *    Masa | Nama | Kehadiran | Bilangan tetamu | Ucapan
  * 3. Extensions → Apps Script, paste this file, then Deploy → New deployment → Web app.
  *    Execute as: Me
  *    Who has access: Anyone
@@ -28,11 +28,9 @@ function doPost(e) {
     sheet.appendRow([
       data.submittedAt || new Date(),
       data.fullName || "",
-      data.email || "",
       data.attendance || "",
-      data.mealPreference || "",
-      data.dietaryRestrictions || "",
-      data.plusOneName || "",
+      data.guestCount || "",
+      data.message || "",
     ]);
 
     return json_({ ok: true });

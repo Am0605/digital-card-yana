@@ -14,42 +14,34 @@ import {
   guestCountOptions,
   initialRsvpState,
   isGuestCount,
-  mealOptions,
   type Attendance,
   type RsvpFieldErrors,
 } from "@/lib/rsvp";
 import { wedding } from "@/lib/wedding";
-
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function validateRsvp(
   formData: FormData,
   attendance: Attendance | "",
 ): RsvpFieldErrors {
   const fullName = String(formData.get("fullName") ?? "").trim();
-  const email = String(formData.get("email") ?? "").trim();
-  const mealPreference = String(formData.get("mealPreference") ?? "").trim();
-  const guestCount = String(formData.get("plusOneName") ?? "").trim();
+  const guestCount = String(formData.get("guestCount") ?? "").trim();
+  const message = String(formData.get("message") ?? "").trim();
   const errors: RsvpFieldErrors = {};
 
   if (fullName.length < 2) {
     errors.fullName = "Sila masukkan nama penuh.";
   }
 
-  if (!EMAIL_RE.test(email)) {
-    errors.email = "Sila masukkan alamat e-mel yang sah.";
-  }
-
   if (attendance !== "attending" && attendance !== "declining") {
     errors.attendance = "Sila maklumkan sama ada anda dapat hadir.";
   }
 
-  if (attendance === "attending" && !mealPreference) {
-    errors.mealPreference = "Sila pilih hidangan.";
+  if (attendance === "attending" && !isGuestCount(guestCount)) {
+    errors.guestCount = "Sila pilih bilangan tetamu dari 1 hingga 10.";
   }
 
-  if (attendance === "attending" && !isGuestCount(guestCount)) {
-    errors.plusOneName = "Sila pilih bilangan tetamu dari 1 hingga 10.";
+  if (message.length > 500) {
+    errors.message = "Ucapan terlalu panjang. Sila ringkaskan.";
   }
 
   return errors;
@@ -181,20 +173,6 @@ export function RsvpForm() {
                 <FieldError message={errors.fullName} />
               </label>
 
-              {/* <label className="block">
-                <span className="mb-2 block text-[0.68rem] font-medium uppercase tracking-[0.2em] text-ink-soft">
-                  E-mel
-                </span>
-                <input
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  className="w-full rounded-2xl border border-gold/25 bg-white/80 px-4 py-3.5 font-sans text-sm text-ink outline-none transition focus:border-gold focus:ring-2 focus:ring-gold/20"
-                />
-                <FieldError message={errors.email} />
-              </label> */}
-
               <fieldset>
                 <legend className="mb-3 text-[0.68rem] font-medium uppercase tracking-[0.2em] text-ink-soft">
                   Kehadiran
@@ -237,29 +215,6 @@ export function RsvpForm() {
                 <FieldError message={errors.attendance} />
               </fieldset>
 
-              {/* <fieldset>
-                <legend className="mb-3 text-[0.68rem] font-medium uppercase tracking-[0.2em] text-ink-soft">
-                  Pilihan hidangan
-                </legend>
-                <div className="grid grid-cols-3 gap-2">
-                  {mealOptions.map((option) => (
-                    <label key={option.value} className="cursor-pointer">
-                      <input
-                        type="radio"
-                        name="mealPreference"
-                        value={option.value}
-                        required={isAttending}
-                        className="peer sr-only"
-                      />
-                      <span className="flex items-center justify-center rounded-2xl border border-gold/20 bg-white/70 px-2 py-3 text-center text-xs text-ink-soft transition peer-checked:border-gold peer-checked:bg-champagne/35 peer-checked:text-ink peer-checked:shadow-[0_8px_24px_rgba(184,149,108,0.16)] hover:border-gold/40">
-                        {option.label}
-                      </span>
-                    </label>
-                  ))}
-                </div>
-                <FieldError message={errors.mealPreference} />
-              </fieldset> */}
-
               <AnimatePresence initial={false}>
                 {isAttending ? (
                   <motion.div
@@ -276,7 +231,7 @@ export function RsvpForm() {
                       </span>
                       <span className="relative block">
                         <select
-                          name="plusOneName"
+                          name="guestCount"
                           required={isAttending}
                           defaultValue=""
                           className="w-full appearance-none rounded-2xl border border-gold/25 bg-white/80 px-4 py-3.5 font-sans text-sm text-ink outline-none transition focus:border-gold focus:ring-2 focus:ring-gold/20"
@@ -301,23 +256,25 @@ export function RsvpForm() {
                           <path d="M5 7.5 10 12.5 15 7.5" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                       </span>
-                      <FieldError message={errors.plusOneName} />
+                      <FieldError message={errors.guestCount} />
                     </label>
                   </motion.div>
                 ) : null}
               </AnimatePresence>
 
-              {/* <label className="block">
+              <label className="block">
                 <span className="mb-2 block text-[0.68rem] font-medium uppercase tracking-[0.2em] text-ink-soft">
-                  Pantang makanan
+                  Ucapan
                 </span>
-                <input
-                  name="dietaryRestrictions"
-                  type="text"
-                  placeholder="Alahan, catatan sayuran, atau tiada"
-                  className="w-full rounded-2xl border border-gold/25 bg-white/80 px-4 py-3.5 font-sans text-sm text-ink outline-none transition placeholder:text-ink-soft/50 focus:border-gold focus:ring-2 focus:ring-gold/20"
+                <textarea
+                  name="message"
+                  rows={4}
+                  maxLength={500}
+                  placeholder="Ucapan untuk pengantin"
+                  className="w-full resize-none rounded-2xl border border-gold/25 bg-white/80 px-4 py-3.5 font-sans text-sm text-ink outline-none transition placeholder:text-ink-soft/50 focus:border-gold focus:ring-2 focus:ring-gold/20"
                 />
-              </label> */}
+                <FieldError message={errors.message} />
+              </label>
 
               {state.status === "error" && state.message ? (
                 <p className="rounded-2xl bg-blush/30 px-4 py-3 text-center text-sm text-ink">

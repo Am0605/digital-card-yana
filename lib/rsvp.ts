@@ -3,12 +3,6 @@ export const attendanceOptions = [
   { value: "declining", label: "Mohon maaf, tidak dapat hadir" },
 ] as const;
 
-export const mealOptions = [
-  { value: "beef", label: "Daging" },
-  { value: "chicken", label: "Ayam" },
-  { value: "vegetarian", label: "Sayuran" },
-] as const;
-
 export const guestCountMin = 1;
 export const guestCountMax = 10;
 
@@ -24,18 +18,9 @@ export function isGuestCount(value: string) {
 }
 
 export type Attendance = (typeof attendanceOptions)[number]["value"];
-export type MealPreference = (typeof mealOptions)[number]["value"];
 
 export type RsvpFieldErrors = Partial<
-  Record<
-    | "fullName"
-    | "email"
-    | "attendance"
-    | "mealPreference"
-    | "dietaryRestrictions"
-    | "plusOneName",
-    string
-  >
+  Record<"fullName" | "attendance" | "guestCount" | "message", string>
 >;
 
 export type RsvpActionState = {
@@ -46,14 +31,4 @@ export type RsvpActionState = {
 
 export const initialRsvpState: RsvpActionState = {
   status: "idle",
-};
-
-export type RsvpPayload = {
-  submittedAt: string;
-  fullName: string;
-  email: string;
-  attendance: Attendance | "";
-  mealPreference: MealPreference | "";
-  dietaryRestrictions: string;
-  plusOneName: string;
 };
