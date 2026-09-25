@@ -79,7 +79,7 @@ function SuccessState({ attending }: { attending: boolean }) {
       initial={{ opacity: 0, scale: 0.96, y: 12 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-      className="rounded-[1.75rem] border border-gold/20 bg-white/65 px-6 py-14 text-center shadow-[0_20px_50px_rgba(63,52,44,0.08)]"
+      className="rounded-[1.75rem] border border-gold/20 bg-white/65 px-6 py-14 text-center shadow-[0_20px_50px_rgba(74,28,42,0.08)]"
     >
       <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-stone">
         <motion.svg
@@ -165,7 +165,7 @@ export function RsvpForm() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -12 }}
-              className="space-y-5 rounded-[1.75rem] border border-gold/20 bg-white/55 p-6 shadow-[0_20px_50px_rgba(63,52,44,0.08)] backdrop-blur-sm sm:p-8"
+              className="space-y-5 rounded-[1.75rem] border border-gold/20 bg-white/55 p-6 shadow-[0_20px_50px_rgba(74,28,42,0.08)] backdrop-blur-sm sm:p-8"
             >
               <label className="block">
                 <span className="mb-2 block text-[0.68rem] font-medium uppercase tracking-[0.2em] text-ink-soft">
@@ -210,7 +210,7 @@ export function RsvpForm() {
                         whileTap={{ scale: 0.985 }}
                         className={`cursor-pointer rounded-2xl border px-4 py-4 text-center text-sm transition ${
                           selected
-                            ? "border-gold bg-champagne/35 text-ink shadow-[0_8px_24px_rgba(184,149,108,0.16)]"
+                            ? "border-gold bg-champagne/35 text-ink shadow-[0_8px_24px_rgba(156,48,72,0.16)]"
                             : "border-gold/20 bg-white/70 text-ink-soft hover:border-gold/40"
                         }`}
                       >
@@ -251,7 +251,7 @@ export function RsvpForm() {
                         required={isAttending}
                         className="peer sr-only"
                       />
-                      <span className="flex items-center justify-center rounded-2xl border border-gold/20 bg-white/70 px-2 py-3 text-center text-xs text-ink-soft transition peer-checked:border-gold peer-checked:bg-champagne/35 peer-checked:text-ink peer-checked:shadow-[0_8px_24px_rgba(184,149,108,0.16)] hover:border-gold/40">
+                      <span className="flex items-center justify-center rounded-2xl border border-gold/20 bg-white/70 px-2 py-3 text-center text-xs text-ink-soft transition peer-checked:border-gold peer-checked:bg-champagne/35 peer-checked:text-ink peer-checked:shadow-[0_8px_24px_rgba(156,48,72,0.16)] hover:border-gold/40">
                         {option.label}
                       </span>
                     </label>
@@ -330,7 +330,7 @@ export function RsvpForm() {
                 disabled={pending}
                 whileHover={pending ? undefined : { scale: 1.02 }}
                 whileTap={pending ? undefined : { scale: 0.98 }}
-                className="flex w-full items-center justify-center gap-3 rounded-full bg-ink px-6 py-4 text-xs font-medium uppercase tracking-[0.24em] text-stone shadow-[0_12px_30px_rgba(63,52,44,0.18)] transition-colors hover:bg-gold-deep disabled:cursor-wait disabled:opacity-80"
+                className="flex w-full items-center justify-center gap-3 rounded-full bg-ink px-6 py-4 text-xs font-medium uppercase tracking-[0.24em] text-stone shadow-[0_12px_30px_rgba(74,28,42,0.18)] transition-colors hover:bg-gold-deep disabled:cursor-wait disabled:opacity-80"
               >
                 {pending ? (
                   <>

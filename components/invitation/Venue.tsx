@@ -22,7 +22,7 @@ export function Venue() {
       </FadeIn>
 
       <FadeIn delay={0.12} className="mx-auto mt-12 max-w-lg">
-        <div className="rounded-[1.75rem] border border-gold/20 bg-white/55 p-7 shadow-[0_20px_50px_rgba(63,52,44,0.08)] backdrop-blur-sm sm:p-9">
+        <div className="rounded-[1.75rem] border border-gold/20 bg-white/55 p-7 shadow-[0_20px_50px_rgba(74,28,42,0.08)] backdrop-blur-sm sm:p-9">
           <p className="text-center font-serif text-3xl text-ink">{wedding.venue.name}</p>
           <p className="mt-2 text-center font-sans text-sm tracking-wide text-gold-deep">
             {wedding.venue.hall}

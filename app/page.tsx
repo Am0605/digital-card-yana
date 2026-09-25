@@ -9,7 +9,7 @@ import { Venue } from "@/components/invitation/Venue";
 export default function Home() {
   return (
     <InvitationShell>
-      <main className="mx-auto min-h-full w-full max-w-xl bg-background pb-28 shadow-[0_0_80px_rgba(63,52,44,0.08)]">
+      <main className="mx-auto min-h-full w-full max-w-xl bg-background pb-28 shadow-[0_0_80px_rgba(74,28,42,0.08)]">
         <Hero />
         <InvitationNote />
         <Venue />

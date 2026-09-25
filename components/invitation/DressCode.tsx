@@ -26,7 +26,7 @@ export function DressCode() {
         {wedding.dressCode.palette.map((swatch) => (
           <div key={swatch.name} className="flex flex-col items-center gap-2">
             <span
-              className="h-12 w-12 rounded-full border border-white/80 shadow-[0_8px_20px_rgba(63,52,44,0.12)]"
+              className="h-12 w-12 rounded-full border border-white/80 shadow-[0_8px_20px_rgba(74,28,42,0.12)]"
               style={{ backgroundColor: swatch.hex }}
               aria-hidden="true"
             />

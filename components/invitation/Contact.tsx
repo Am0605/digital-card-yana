@@ -110,8 +110,8 @@ export function ContactPanel() {
                   className="overflow-hidden"
                 >
                   <div className="px-3 pb-2">
-                    {group.sections.map((section) => (
-                      <div key={section.label || group.title}>
+                    {group.sections.map((section, index) => (
+                      <div key={`${group.title}-${index}`}>
                         {section.label ? (
                           <p className="pt-1 pb-1 text-[0.68rem] font-medium uppercase tracking-[0.18em] text-gold-deep">
                             {section.label}

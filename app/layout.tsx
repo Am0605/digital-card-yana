@@ -39,7 +39,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#faf6f0",
+  themeColor: "#f4e4e7",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -48,7 +48,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${figtree.variable} ${cormorant.variable} ${greatVibes.variable} ${amiri.variable} h-full antialiased`}
     >
-      <body className="min-h-full bg-[#efe6db] font-sans text-ink">
+      <body className="min-h-full bg-[#f4e4e7] font-sans text-ink">
         <link rel="preload" href={wedding.music.src} as="audio" />
         {children}
       </body>

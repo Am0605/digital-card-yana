@@ -128,7 +128,7 @@ export function BottomNav({
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 8 }}
-                  className="absolute inset-x-0 bottom-[calc(100%+2.4rem)] z-20 max-h-[min(70dvh,32rem)] overflow-y-auto rounded-2xl border border-gold/25 bg-white/95 shadow-[0_16px_40px_rgba(63,52,44,0.12)]"
+                  className="absolute inset-x-0 bottom-[calc(100%+2.4rem)] z-20 max-h-[min(70dvh,32rem)] overflow-y-auto rounded-2xl border border-gold/25 bg-white/95 shadow-[0_16px_40px_rgba(74,28,42,0.12)]"
                 >
                   {panel === "calendar" ? (
                     <div className="p-2">
@@ -145,7 +145,7 @@ export function BottomNav({
               ) : null}
             </AnimatePresence>
 
-            <div className="grid grid-cols-4 rounded-[1.6rem] border border-gold/20 bg-stone/95 pt-7 pb-2 shadow-[0_-10px_40px_rgba(63,52,44,0.12)] backdrop-blur-md">
+            <div className="grid grid-cols-4 rounded-[1.6rem] border border-gold/20 bg-stone/95 pt-7 pb-2 shadow-[0_-10px_40px_rgba(74,28,42,0.12)] backdrop-blur-md">
               {items.map((item) => {
                 if (item.type === "link") {
                   return (

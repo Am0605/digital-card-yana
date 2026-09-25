@@ -13,7 +13,7 @@ export function Hero() {
       id="hero"
       className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 pt-16 pb-28 text-center"
     >
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,#f7e7dc_0%,transparent_55%),radial-gradient(ellipse_at_bottom,#ead7d2_0%,transparent_50%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,#fde8eb_0%,transparent_55%),radial-gradient(ellipse_at_bottom,#f3cfd5_0%,transparent_50%)]" />
       <div className="paper-grain pointer-events-none absolute inset-0 opacity-40" />
 
       <motion.p

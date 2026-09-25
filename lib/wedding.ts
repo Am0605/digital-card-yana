@@ -34,7 +34,7 @@ export const wedding = {
             ],
           },
           {
-            label: "Adik-beradik",
+            label: "",
             people: [
               { name: "Kak Nor", role: "", phone: "0123276450", whatsapp: "" },
               { name: "Hawa", role: "", phone: "0122881452", whatsapp: "" },
