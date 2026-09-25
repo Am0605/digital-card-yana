@@ -12,7 +12,7 @@ import { wedding } from "@/lib/wedding";
 
 export function Venue() {
   return (
-    <section id="venue" className="px-6 py-20 sm:py-24">
+    <section id="venue" className="scroll-mt-6 px-6 py-20 sm:py-24">
       <FadeIn>
         <SectionEyebrow>Venue & location</SectionEyebrow>
         <SectionTitle>Join us here</SectionTitle>

@@ -27,7 +27,7 @@ export function OurStory() {
         <ol>
           {wedding.story.map((chapter, index) => (
             <FadeIn
-              key={chapter.year}
+              key={`${chapter.year}-${chapter.title}`}
               as="li"
               delay={index * 0.08}
               className="relative mb-12 grid grid-cols-[2.3rem_1fr] items-start gap-4 last:mb-0 sm:grid-cols-1 sm:text-center"

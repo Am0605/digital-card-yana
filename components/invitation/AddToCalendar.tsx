@@ -4,6 +4,32 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { downloadIcsFile, getGoogleCalendarUrl } from "@/lib/calendar";
 
+export function CalendarChoices({ onDone }: { onDone?: () => void }) {
+  return (
+    <>
+      <a
+        href={getGoogleCalendarUrl()}
+        target="_blank"
+        rel="noreferrer"
+        className="block rounded-xl px-4 py-3 text-left text-sm text-ink transition-colors hover:bg-stone"
+        onClick={onDone}
+      >
+        Google Calendar
+      </a>
+      <button
+        type="button"
+        className="block w-full rounded-xl px-4 py-3 text-left text-sm text-ink transition-colors hover:bg-stone"
+        onClick={() => {
+          downloadIcsFile();
+          onDone?.();
+        }}
+      >
+        Download .ics
+      </button>
+    </>
+  );
+}
+
 export function AddToCalendar() {
   const [open, setOpen] = useState(false);
 
@@ -28,25 +54,7 @@ export function AddToCalendar() {
             transition={{ duration: 0.22 }}
             className="absolute top-[calc(100%+0.6rem)] right-0 left-0 z-20 overflow-hidden rounded-2xl border border-gold/25 bg-white/95 p-2 shadow-[0_16px_40px_rgba(63,52,44,0.12)] backdrop-blur-md sm:left-auto sm:w-56"
           >
-            <a
-              href={getGoogleCalendarUrl()}
-              target="_blank"
-              rel="noreferrer"
-              className="block rounded-xl px-4 py-3 text-left text-sm text-ink transition-colors hover:bg-stone"
-              onClick={() => setOpen(false)}
-            >
-              Google Calendar
-            </a>
-            <button
-              type="button"
-              className="block w-full rounded-xl px-4 py-3 text-left text-sm text-ink transition-colors hover:bg-stone"
-              onClick={() => {
-                downloadIcsFile();
-                setOpen(false);
-              }}
-            >
-              Download .ics
-            </button>
+            <CalendarChoices onDone={() => setOpen(false)} />
           </motion.div>
         ) : null}
       </AnimatePresence>

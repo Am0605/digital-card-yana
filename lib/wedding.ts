@@ -11,12 +11,17 @@ export const wedding = {
   },
   tagline:
     "Together with their families, request the pleasure of your company as they celebrate their marriage",
-  dateLabel: "Saturday, November 17, 2026",
+  dateLabel: "Saturday, November 7, 2026",
   timeLabel: "Eleven o'clock in the morning",
-  start: "2026-11-17T11:00:00+08:00",
-  end: "2026-11-17T16:30:00+08:00",
+  start: "2026-11-07T11:00:00+08:00",
+  end: "2026-11-07T16:30:00+08:00",
   timezone: "Asia/Singapore",
   rsvpDeadline: "November 1, 2026",
+  contact: {
+    note: "Questions about the day, directions, or seating — we are happy to help.",
+    phone: "",
+    whatsapp: "",
+  },
   venue: {
     name: "Dewan Jubli Perak",
     hall: "Shah Alam Sultan Abdul Aziz",

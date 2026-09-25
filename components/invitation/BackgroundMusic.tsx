@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { wedding } from "@/lib/wedding";
 
@@ -9,63 +9,37 @@ export function useInvitationMusic() {
   const userPaused = useRef(false);
   const [playing, setPlaying] = useState(false);
 
-  async function play() {
+  function play() {
     const audio = audioRef.current;
     if (!audio) return;
 
-    try {
-      await audio.play();
-      setPlaying(true);
-    } catch {
-      setPlaying(false);
-    }
+    userPaused.current = false;
+    audio.volume = 0.45;
+    void audio.play().then(
+      () => setPlaying(true),
+      () => setPlaying(false),
+    );
   }
 
   function pause() {
+    userPaused.current = true;
     audioRef.current?.pause();
     setPlaying(false);
   }
 
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    audio.volume = 0.45;
-    void play();
-
-    function unlockOnGesture(event: PointerEvent) {
-      window.removeEventListener("pointerdown", unlockOnGesture);
-
-      if ((event.target as Element | null)?.closest("[data-music-toggle]")) {
-        return;
-      }
-
-      if (!userPaused.current) {
-        void play();
-      }
-    }
-
-    window.addEventListener("pointerdown", unlockOnGesture);
-
-    return () => {
-      window.removeEventListener("pointerdown", unlockOnGesture);
-    };
-  }, []);
-
   function toggle() {
     if (playing) {
-      userPaused.current = true;
       pause();
       return;
     }
 
-    userPaused.current = false;
-    void play();
+    play();
   }
 
   return {
     audioRef,
     playing,
+    play,
     toggle,
     setPlaying,
   };
@@ -87,10 +61,10 @@ export function MusicToggle({
       whileTap={{ scale: 0.95 }}
       aria-pressed={playing}
       aria-label={playing ? `Pause ${wedding.music.title}` : `Play ${wedding.music.title}`}
-      className="relative flex h-9 w-9 items-center justify-center rounded-full border border-gold/30 bg-white/70 text-ink"
+      className="relative flex h-12 w-12 items-center justify-center rounded-full border border-gold/35 bg-stone text-ink shadow-[0_10px_24px_rgba(63,52,44,0.16)]"
     >
       <motion.span
-        className="flex h-7 w-7 items-center justify-center rounded-full border border-gold/30 bg-gradient-to-br from-champagne/80 to-blush/70"
+        className="flex h-9 w-9 items-center justify-center rounded-full border border-gold/30 bg-gradient-to-br from-champagne/80 to-blush/70"
         animate={{ rotate: playing ? 360 : 0 }}
         transition={
           playing
@@ -99,7 +73,7 @@ export function MusicToggle({
         }
         aria-hidden="true"
       >
-        <span className="h-1.5 w-1.5 rounded-full bg-ink/80" />
+        <span className="h-2 w-2 rounded-full bg-ink/80" />
       </motion.span>
       <span
         className="pointer-events-none absolute inset-0 flex items-center justify-center text-ink"

@@ -134,7 +134,7 @@ export function RsvpForm() {
   }
 
   return (
-    <section id="rsvp" className="px-6 py-20 sm:py-24">
+    <section id="rsvp" className="scroll-mt-6 px-6 py-20 sm:py-24">
       <FadeIn>
         <SectionEyebrow>Kindly reply</SectionEyebrow>
         <SectionTitle>RSVP</SectionTitle>

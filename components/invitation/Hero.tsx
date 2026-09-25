@@ -11,7 +11,7 @@ export function Hero() {
   return (
     <header
       id="hero"
-      className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 py-16 text-center"
+      className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 pt-16 pb-28 text-center"
     >
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,#f7e7dc_0%,transparent_55%),radial-gradient(ellipse_at_bottom,#ead7d2_0%,transparent_50%)]" />
       <div className="paper-grain pointer-events-none absolute inset-0 opacity-40" />
@@ -91,7 +91,7 @@ export function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.1 }}
-        className="absolute bottom-7 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 text-[0.62rem] uppercase tracking-[0.28em] text-ink-soft"
+        className="absolute bottom-24 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 text-[0.62rem] uppercase tracking-[0.28em] text-ink-soft"
       >
         <span>Open the card</span>
         <motion.span

@@ -42,7 +42,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${figtree.variable} ${cormorant.variable} ${greatVibes.variable} h-full antialiased`}
     >
-      <body className="min-h-full bg-[#efe6db] font-sans text-ink">{children}</body>
+      <body className="min-h-full bg-[#efe6db] font-sans text-ink">
+        <link rel="preload" href={wedding.music.src} as="audio" />
+        {children}
+      </body>
     </html>
   );
 }
