@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Countdown } from "@/components/invitation/Countdown";
+import { FloralFrame } from "@/components/invitation/Floral";
 import { Ornament } from "@/components/invitation/SectionHeader";
 import { wedding } from "@/lib/wedding";
 
@@ -11,10 +12,11 @@ export function Hero() {
   return (
     <header
       id="hero"
-      className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 pt-16 pb-28 text-center"
+      className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-8 pt-20 pb-16 text-center"
     >
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,#fde8eb_0%,transparent_55%),radial-gradient(ellipse_at_bottom,#f3cfd5_0%,transparent_50%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,#edd9cc_0%,transparent_55%),radial-gradient(ellipse_at_bottom,#dcc6bc_0%,transparent_50%)]" />
       <div className="paper-grain pointer-events-none absolute inset-0 opacity-40" />
+      <FloralFrame />
 
       <motion.p
         initial={{ opacity: 0, y: 16 }}

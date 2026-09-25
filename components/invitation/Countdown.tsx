@@ -67,7 +67,7 @@ export function Countdown() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7 + index * 0.08, duration: 0.5 }}
-          className="rounded-2xl border border-gold/25 bg-white/40 px-1 py-3 text-center shadow-[0_8px_30px_rgba(74,28,42,0.06)] backdrop-blur-sm"
+          className="rounded-2xl border border-gold/25 bg-white/40 px-1 py-3 text-center shadow-[0_8px_30px_rgba(63,52,44,0.06)] backdrop-blur-sm"
         >
           <p className="font-serif text-2xl font-medium tabular-nums text-ink sm:text-3xl">
             {value}

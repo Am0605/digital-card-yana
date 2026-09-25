@@ -12,7 +12,7 @@ export const wedding = {
   tagline:
     "Bersama keluarga, kami mempersilakan kehadiran anda untuk meraikan majlis perkahwinan ini",
   dateLabel: "Sabtu, 7 November 2026",
-  timeLabel: "11:00 pagi - 4:30 petang",
+  timeLabel: "11:30 pagi - 4:30 petang",
   start: "2026-11-07T11:00:00+08:00",
   end: "2026-11-07T16:30:00+08:00",
   timezone: "Asia/Singapore",
@@ -52,7 +52,7 @@ export const wedding = {
               {
                 name: "Rosnani",
                 role: "Ibu pihak perempuan",
-                phone: "012257552",
+                phone: "0122578552",
                 whatsapp: "",
               },
               { name: "Intan", role: "", phone: "0109264100", whatsapp: "" },

@@ -1,4 +1,5 @@
 import { DressCode } from "@/components/invitation/DressCode";
+import { FloralBackground } from "@/components/invitation/Floral";
 import { Hero } from "@/components/invitation/Hero";
 import { InvitationFooter } from "@/components/invitation/InvitationFooter";
 import { InvitationShell } from "@/components/invitation/InvitationShell";
@@ -9,13 +10,18 @@ import { Venue } from "@/components/invitation/Venue";
 export default function Home() {
   return (
     <InvitationShell>
-      <main className="mx-auto min-h-full w-full max-w-xl bg-background pb-28 shadow-[0_0_80px_rgba(74,28,42,0.08)]">
+      <main className="mx-auto min-h-full w-full max-w-xl bg-background pb-28 shadow-[0_0_80px_rgba(63,52,44,0.08)]">
         <Hero />
-        <InvitationNote />
-        <Venue />
-        <DressCode />
-        <RsvpForm />
-        <InvitationFooter />
+        <div className="relative">
+          <FloralBackground />
+          <div className="relative">
+            <InvitationNote />
+            <Venue />
+            <DressCode />
+            <RsvpForm />
+            <InvitationFooter />
+          </div>
+        </div>
       </main>
     </InvitationShell>
   );

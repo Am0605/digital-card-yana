@@ -8,7 +8,7 @@ import { wedding } from "@/lib/wedding";
 const ease = [0.77, 0, 0.18, 1] as const;
 
 const curtainFace =
-  "absolute inset-y-0 w-1/2 bg-[linear-gradient(90deg,#f6d5da_0%,#fdeef0_12%,#e8b0b8_28%,#fff6f7_50%,#efc2c8_72%,#fdeef0_88%,#e4b4bc_100%)]";
+  "absolute inset-y-0 w-1/2 bg-[linear-gradient(90deg,#dcc6b6_0%,#eadccf_12%,#c9ad99_28%,#efe3d6_50%,#cbb39f_72%,#eadccf_88%,#d4bba9_100%)]";
 
 export function Curtain({
   opening,
@@ -30,13 +30,13 @@ export function Curtain({
   return (
     <div className="fixed inset-0 z-50" role="dialog" aria-label="Buka jemputan">
       <motion.div
-        className={`${curtainFace} left-0 origin-left shadow-[8px_0_24px_rgba(74,28,42,0.12)]`}
+        className={`${curtainFace} left-0 origin-left shadow-[8px_0_24px_rgba(63,52,44,0.12)]`}
         initial={false}
         animate={{ x: opening ? "-105%" : "0%" }}
         transition={{ duration: 1.15, ease }}
       />
       <motion.div
-        className={`${curtainFace} right-0 origin-right shadow-[-8px_0_24px_rgba(74,28,42,0.12)]`}
+        className={`${curtainFace} right-0 origin-right shadow-[-8px_0_24px_rgba(63,52,44,0.12)]`}
         initial={false}
         animate={{ x: opening ? "105%" : "0%" }}
         transition={{ duration: 1.15, ease }}
